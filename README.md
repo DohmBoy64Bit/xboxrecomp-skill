@@ -42,15 +42,33 @@ Copy or symlink this directory to a skills path Cursor reads:
 
 The folder must contain `SKILL.md` at its root.
 
-### Option 2: Packaged `.skill` file
+### Option 2: Download `xboxrecomp.skill` (recommended for install)
 
-From [skill-creator](https://github.com/anthropics/skills) (or your local copy):
+**[GitHub Releases](https://github.com/DohmBoy64Bit/xboxrecomp-skill/releases)** attach a pre-built **`xboxrecomp.skill`** file.
+
+| What it is | What it is for |
+|------------|----------------|
+| A **ZIP archive** (`.skill` extension) of this skill folder | **One-file install** in Cursor — import/install the skill without cloning this repo |
+| Contains `SKILL.md` + `references/` | Gives the agent the xboxrecomp playbook and quickrefs |
+| Does **not** contain the [xboxrecomp toolkit](https://github.com/sp00nznet/xboxrecomp) | You still clone upstream separately for Python tools and C runtime |
+
+**Steps:**
+
+1. Open [Releases](https://github.com/DohmBoy64Bit/xboxrecomp-skill/releases) and download **`xboxrecomp.skill`** from the latest tag.
+2. Install it through Cursor’s skill import UI (or unpack into `~/.cursor/skills/xboxrecomp/` if you manage skills manually).
+3. Clone [sp00nznet/xboxrecomp](https://github.com/sp00nznet/xboxrecomp) and follow **Clone the toolkit** below.
+
+`evals/` is omitted from the package (development-only test prompts).
+
+### Option 3: Build `.skill` yourself
+
+From [Anthropic skill-creator](https://github.com/anthropics/skills) `package_skill.py`, package a clean tree (no `.git`):
 
 ```bash
 python -m scripts.package_skill path/to/xboxrecomp path/to/output
 ```
 
-Produces `xboxrecomp.skill` (ZIP). Install via Cursor’s skill import flow. The packager skips `evals/` by default.
+Produces `xboxrecomp.skill`. The packager skips `evals/` by default.
 
 ---
 
@@ -124,9 +142,10 @@ xboxrecomp/
 
 | Artifact | Purpose |
 |----------|---------|
-| **Skill folder** | Live install; edit `SKILL.md` and references |
-| **`xboxrecomp.skill`** | ZIP distribution; same content, for install/backup |
-| **GitHub xboxrecomp** | Source of truth for tools, runtime, templates, full docs |
+| **This Git repo** | Source for `SKILL.md`, references, README; clone to contribute |
+| **Release `xboxrecomp.skill`** | Pre-built ZIP for Cursor install — no clone of this repo required |
+| **Skill folder** (after install or git clone) | Live copy the agent reads; edit and reinstall as needed |
+| **[sp00nznet/xboxrecomp](https://github.com/sp00nznet/xboxrecomp)** | Toolkit source of truth — tools, runtime, templates, full docs (always separate) |
 
 The skill’s `description` in `SKILL.md` frontmatter controls when the agent auto-selects this skill. The body loads when the skill is invoked.
 
@@ -149,5 +168,6 @@ To improve the skill: edit `SKILL.md` or `references/`, re-run evals, repackage 
 
 ## Links
 
+- **Releases (`.skill` download):** https://github.com/DohmBoy64Bit/xboxrecomp-skill/releases  
 - Upstream toolkit: https://github.com/sp00nznet/xboxrecomp  
 - Xbox Dev Wiki (kernel, XBE): https://xboxdevwiki.net/  
