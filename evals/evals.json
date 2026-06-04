@@ -1,0 +1,44 @@
+{
+  "skill_name": "xboxrecomp",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I cloned xboxrecomp and extracted default.xbe from my ISO into game_files/. Walk me through the exact commands to run the Python pipeline and what files I should expect in each output folder.",
+      "expected_output": "Ordered list of py -3 -m tools.* commands (xbe_parser, disasm --text-only, func_id, recomp --all --split 1000) with output paths (functions.json, gen/recomp_*.c, etc.) and prerequisite pip install capstone.",
+      "files": [],
+      "expectations": [
+        "Response lists tools.xbe_parser before disasm/func_id/recomp",
+        "Response includes pip install capstone or capstone prerequisite",
+        "Response mentions functions.json or tools/disasm/output",
+        "Response includes tools.recomp with --all and mentions gen/recomp output files",
+        "Response documents xbe_parser script fallback (xbe_parser.py) or verifies __main__.py exists"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "My recompiled Xbox game crashes immediately with 'ICALL FAIL: VA=0x1C45BA68'. I have a MAP file. How do I find which recompiled function made the bad call and what should I try first to fix it?",
+      "expected_output": "Steps to map caller address via .map file, interpret garbage VA vs valid Xbox VA, use g_icall_trace, add recomp_manual.c override or dispatch entry, reference indirect-calls.md workflow.",
+      "files": [],
+      "expectations": [
+        "Response explains using the MAP file to map native caller address to a recompiled symbol",
+        "Response names recomp_manual.c and recomp_lookup_manual as the override location",
+        "Response mentions g_icall_trace or ICALL trace ring buffer",
+        "Response treats 0x1C45BA68 as garbage vtable per indirect-calls.md and recommends range guard before dispatch",
+        "Response cites docs/pipeline/06-debugging.md or docs/technical/indirect-calls.md"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I want to start a new OG Xbox static recomp project for a RenderWare game. What CMake/template layout should I use from xboxrecomp and which runtime libraries do I link?",
+      "expected_output": "Point to templates/new-game/, XBOXRECOMP_DIR + add_subdirectory, link xboxrecomp umbrella, list six libs purpose, mention recomp_manual.c and templates/runtime headers.",
+      "files": [],
+      "expectations": [
+        "Response references templates/new-game",
+        "Response mentions XBOXRECOMP_DIR or add_subdirectory for xboxrecomp",
+        "Response names all six runtime libraries or states xboxrecomp umbrella links them",
+        "Response mentions recomp_manual.c and templates/runtime/recomp_types.h",
+        "Response notes RenderWare has no separate link library and func_id RW classification applies"
+      ]
+    }
+  ]
+}
